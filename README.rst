@@ -15,7 +15,7 @@ CDAP version 3.5.x or higher.
 
 Building Plugins
 ----------------
-You get started with Run transform plugin by building directly from the latest source code::
+You get started with S3ToRedshift action plugin by building directly from the latest source code::
 
    git clone git@github.com:hydrator/s3toredshift-action.git
    cd s3toredshift-action

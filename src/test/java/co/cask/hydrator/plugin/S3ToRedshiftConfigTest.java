@@ -37,8 +37,8 @@ public class S3ToRedshiftConfigTest {
       new S3ToRedshiftAction(config).configurePipeline(configurer);
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      Assert.assertEquals("Both configurations 'Keys'(Access and Secret Access keys) and 'IAM Role' can not be " +
-                            "empty at the same time. Either provide the 'Keys'(Access and Secret Access keys) or " +
+      Assert.assertEquals("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM Role' can not be " +
+                            "empty at the same time. Either provide the 'Keys(Access and Secret Access keys)' or " +
                             "'IAM Role' for connecting to S3 bucket.", e.getMessage());
     }
   }
@@ -55,8 +55,8 @@ public class S3ToRedshiftConfigTest {
       new S3ToRedshiftAction(config).configurePipeline(configurer);
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      Assert.assertEquals("Both configurations 'Keys'(Access and Secret Access keys) and 'IAM Role' can not be " +
-                            "empty at the same time. Either provide the 'Keys'(Access and Secret Access keys) or " +
+      Assert.assertEquals("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM Role' can not be " +
+                            "empty at the same time. Either provide the 'Keys(Access and Secret Access keys)' or " +
                             "'IAM Role' for connecting to S3 bucket.", e.getMessage());
     }
   }
@@ -74,8 +74,8 @@ public class S3ToRedshiftConfigTest {
       new S3ToRedshiftAction(config).configurePipeline(configurer);
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      Assert.assertEquals("Both configurations 'Keys'(Access and Secret Access keys) and 'IAM Role' can not be " +
-                            "provided at the same time. Either provide the 'Keys'(Access and Secret Access keys) or " +
+      Assert.assertEquals("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM Role' can not be " +
+                            "provided at the same time. Either provide the 'Keys(Access and Secret Access keys)' or " +
                             "'IAM Role' for connecting to S3 bucket.", e.getMessage());
     }
   }
@@ -93,8 +93,46 @@ public class S3ToRedshiftConfigTest {
       new S3ToRedshiftAction(config).configurePipeline(configurer);
       Assert.fail();
     } catch (IllegalArgumentException e) {
-      Assert.assertEquals("Both configurations 'Keys'(Access and Secret Access keys) and 'IAM Role' can not be " +
-                            "provided at the same time. Either provide the 'Keys'(Access and Secret Access keys) or " +
+      Assert.assertEquals("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM Role' can not be " +
+                            "provided at the same time. Either provide the 'Keys(Access and Secret Access keys)' or " +
+                            "'IAM Role' for connecting to S3 bucket.", e.getMessage());
+    }
+  }
+
+  @Test
+  public void testIfBothKeysAndRolePresentAsMacro() throws Exception {
+    S3ToRedshiftAction.S3ToRedshiftConfig config = new
+      S3ToRedshiftAction.S3ToRedshiftConfig("${accessKey}", "${secretAccessKey}", "${iamRole}", "",
+                                            "s3://test-bucket/test/2017-02-22", "jdbc:redshift://x.y.us-east-1" +
+                                              ".redshift.amazonaws.com:5439/dev", "masterUser", "masterPassword",
+                                            "redshifttable", "");
+
+    MockPipelineConfigurer configurer = new MockPipelineConfigurer(null);
+    try {
+      new S3ToRedshiftAction(config).configurePipeline(configurer);
+      Assert.fail();
+    } catch (IllegalArgumentException e) {
+      Assert.assertEquals("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM Role' can not be " +
+                            "provided at the same time. Either provide the 'Keys(Access and Secret Access keys)' or " +
+                            "'IAM Role' for connecting to S3 bucket.", e.getMessage());
+    }
+  }
+
+  @Test
+  public void testIfKeysAndRoleIsPresentAsMacro() throws Exception {
+    S3ToRedshiftAction.S3ToRedshiftConfig config = new
+      S3ToRedshiftAction.S3ToRedshiftConfig("testAccessKey", "testSecretAccessKey", "${iamRole}", "",
+                                            "s3://test-bucket/test/2017-02-22", "jdbc:redshift://x.y.us-east-1" +
+                                              ".redshift.amazonaws.com:5439/dev", "masterUser", "masterPassword",
+                                            "redshifttable", "");
+
+    MockPipelineConfigurer configurer = new MockPipelineConfigurer(null);
+    try {
+      new S3ToRedshiftAction(config).configurePipeline(configurer);
+      Assert.fail();
+    } catch (IllegalArgumentException e) {
+      Assert.assertEquals("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM Role' can not be " +
+                            "provided at the same time. Either provide the 'Keys(Access and Secret Access keys)' or " +
                             "'IAM Role' for connecting to S3 bucket.", e.getMessage());
     }
   }

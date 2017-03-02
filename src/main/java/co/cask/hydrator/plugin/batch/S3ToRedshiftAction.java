@@ -141,24 +141,29 @@ public class S3ToRedshiftAction extends Action {
     @Macro
     private String secretAccessKey;
 
-    @Description("IAM Role for AWS S3 to connect to. (Macro-enabled)")
+    @Description("IAM Role for AWS S3 to connect to. This can only be used if the cluster is hosted on AWS servers. " +
+      "(Macro-enabled)")
     @Nullable
     @Macro
     private String iamRole;
 
     @Description("The region for AWS S3 to connect to. If not specified, then plugin will consider that S3 bucket is " +
-      "in the same region as of the Redshift cluster.")
+      "in the same region as of the Redshift cluster. (Macro-enabled)")
     @Nullable
+    @Macro
     private String s3Region;
 
     @Description("The S3 path of the bucket where the data is stored and will be loaded into the Redshift table. For " +
-      "example, 's3://<bucket-name>/test/2017-02-22/'(will load files present in 'test/2017-02-22' directory) or " +
-      "s3://<bucket-name>/test/2017-02-22'(will load files from 'test' directory having prefix '2017-02-22'), for" +
-      " cases when user wants to load the multiple files.")
+      "example, 's3://<bucket-name>/test/' or 's3://<bucket-name>/test/2017-02-22/'(will load files present in " +
+      "specific directory) or 's3://<bucket-name>/test'(will load the files having prefix ``test``) or " +
+      "'s3://<bucket-name>/test/2017-02-22'(will load files from ``test`` directory having prefix ``2017-02-22``). " +
+      "(Macro-enabled)")
+    @Macro
     private String s3DataPath;
 
     @Description("The JDBC Redshift database URL for Redshift cluster, where the table is present. For example, " +
-      "'jdbc:redshift://x.y.us-west-2.redshift.amazonaws.com:5439/dev'.")
+      "'jdbc:redshift://x.y.us-west-2.redshift.amazonaws.com:5439/dev'. (Macro-enabled)")
+    @Macro
     private String clusterDbUrl;
 
     @Description("Master user for the Redshift cluster to connect to. (Macro-enabled)")
@@ -169,12 +174,14 @@ public class S3ToRedshiftAction extends Action {
     @Macro
     private String masterPassword;
 
-    @Description("The Redshift table name where the data from the S3 bucket will be loaded.")
+    @Description("The Redshift table name where the data from the S3 bucket will be loaded. (Macro-enabled)")
+    @Macro
     private String tableName;
 
     @Description("Comma-separated list of the Redshift table column names to load the specific columns from S3 bucket" +
-      ". If not provided, then all the columns from S3 will be loaded into the Redshift table.")
+      ". If not provided, then all the columns from S3 will be loaded into the Redshift table. (Macro-enabled)")
     @Nullable
+    @Macro
     private String listOfColumns;
 
     public S3ToRedshiftConfig(@Nullable String accessKey, @Nullable String secretAccessKey, @Nullable String iamRole,
@@ -199,9 +206,9 @@ public class S3ToRedshiftAction extends Action {
       if (!Strings.isNullOrEmpty(iamRole) || this.containsMacro("iamRole")) {
         if (!((Strings.isNullOrEmpty(accessKey) && !this.containsMacro("accessKey")) &&
           (Strings.isNullOrEmpty(secretAccessKey) && !this.containsMacro("secretAccessKey")))) {
-          throw new IllegalArgumentException("Both configurations 'Keys'(Access and Secret Access keys) and 'IAM " +
-                                               "Role' can not be provided at the same time. Either provide the 'Keys'" +
-                                               "(Access and Secret Access keys) or 'IAM Role' for connecting to S3 " +
+          throw new IllegalArgumentException("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM " +
+                                               "Role' can not be provided at the same time. Either provide the 'Keys" +
+                                               "(Access and Secret Access keys)' or 'IAM Role' for connecting to S3 " +
                                                "bucket.");
         }
       }
@@ -209,9 +216,9 @@ public class S3ToRedshiftAction extends Action {
       if (Strings.isNullOrEmpty(iamRole)) {
         if (!((!Strings.isNullOrEmpty(accessKey) || this.containsMacro("accessKey")) &&
           (!Strings.isNullOrEmpty(secretAccessKey) || this.containsMacro("secretAccessKey")))) {
-          throw new IllegalArgumentException("Both configurations 'Keys'(Access and Secret Access keys) and 'IAM " +
-                                               "Role' can not be empty at the same time. Either provide the 'Keys'" +
-                                               "(Access and Secret Access keys) or 'IAM Role' for connecting to S3 " +
+          throw new IllegalArgumentException("Both configurations 'Keys(Access and Secret Access keys)' and 'IAM " +
+                                               "Role' can not be empty at the same time. Either provide the 'Keys" +
+                                               "(Access and Secret Access keys)' or 'IAM Role' for connecting to S3 " +
                                                "bucket.");
         }
       }
