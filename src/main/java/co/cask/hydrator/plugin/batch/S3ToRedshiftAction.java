@@ -131,17 +131,20 @@ public class S3ToRedshiftAction extends Action {
    */
   public static class S3ToRedshiftConfig extends PluginConfig {
 
-    @Description("Access key for AWS S3 to connect to. (Macro-enabled)")
+    @Description("Access key for AWS S3 to connect to. Either provide 'Keys(Access and Secret Access keys)' or 'IAM " +
+      "Role' for connecting to AWS S3 bucket. (Macro-enabled)")
     @Nullable
     @Macro
     private String accessKey;
 
-    @Description("Secret access key for AWS S3 to connect to. (Macro-enabled)")
+    @Description("Secret access key for AWS S3 to connect to. Either provide 'Keys(Access and Secret Access keys)' or" +
+      " 'IAM Role' for connecting to AWS S3 bucket. (Macro-enabled)")
     @Nullable
     @Macro
     private String secretAccessKey;
 
     @Description("IAM Role for AWS S3 to connect to. This can only be used if the cluster is hosted on AWS servers. " +
+      "Either provide 'Keys(Access and Secret Access keys)' or 'IAM Role' for connecting to AWS S3 bucket. " +
       "(Macro-enabled)")
     @Nullable
     @Macro

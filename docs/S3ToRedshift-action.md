@@ -8,12 +8,14 @@ S3ToRedshift Action that will load the data from AWS S3 bucket into the AWS Reds
 Properties
 ----------
 
-**accessKey:** Access key for AWS S3 to connect to. (Macro-enabled)
+**accessKey:** Access key for AWS S3 to connect to. Either provide 'Keys(Access and Secret Access keys)' or 'IAM
+Role' for connecting to AWS S3 bucket. (Macro-enabled)
 
-**secretAccessKey:** Secret access key for AWS S3 to connect to. (Macro-enabled)
+**secretAccessKey:** Secret access key for AWS S3 to connect to. Either provide 'Keys(Access and Secret Access keys)'
+ or 'IAM Role' for connecting to AWS S3 bucket. (Macro-enabled)
 
-**iamRole:** IAM Role for AWS S3 to connect to. This can only be used if the cluster is hosted on AWS servers.
-(Macro-enabled)
+**iamRole:** IAM Role for AWS S3 to connect to. This can only be used if the cluster is hosted on AWS servers. Either
+ provide 'Keys(Access and Secret Access keys)' or 'IAM Role' for connecting to AWS S3 bucket. (Macro-enabled)
 
 **s3Region:** The region for AWS S3 to connect to. If not specified, then plugin will consider that S3 bucket is in
 the same region as of the Redshift cluster. (Macro-enabled)
@@ -64,7 +66,7 @@ into the Redshift table 'redshifttest'.
         "properties": {
           "accessKey": "access-key",
           "secretAccessKey": "secret-access-key",
-          "s3DataPath": "s3://bucket-name>/test/2017-02-22/",
+          "s3DataPath": "s3://bucket-name>/test/",
           "clusterDbUrl": "jdbc:redshift://x.y.us-west-2.redshift.amazonaws.com:5439/dev",
           "masterUser": "master-user",
           "masterPassword": "master-password",
