@@ -67,15 +67,22 @@ public class S3ToRedshiftAction extends Action {
       String commandToExecute = buildCopyCommand();
       statement.executeUpdate(commandToExecute);
     } catch (ClassNotFoundException e) {
-      throw new IllegalArgumentException(e);
+      throw new IllegalArgumentException(
+        String.format("Could not load an Amazon Redshift JDBC driver. %s", e.getMessage()));
     } catch (SQLException e) {
-      throw new IllegalArgumentException(e);
+      throw new IllegalArgumentException(
+        String.format("Error while loading the data from S3 bucket to Redshift. %s", e.getMessage()));
     } finally {
       try {
-        statement.close();
-        connection.close();
+        if (statement != null) {
+          statement.close();
+        }
+        if (connection != null) {
+          connection.close();
+        }
       } catch (SQLException e) {
-        throw new IllegalArgumentException(e);
+        throw new IllegalArgumentException(
+          String.format("Error while closing the connection. %s", e.getMessage()));
       }
     }
   }
@@ -122,6 +129,7 @@ public class S3ToRedshiftAction extends Action {
       copyCommand.append("'");
     }
     // Set the format as avro.
+    // TODO: [HYDRATOR-1392] Support other formats other than avro while loading the data from S3 to Redshift.
     copyCommand.append(" ").append("format as avro 'auto'").append(";");
     return copyCommand.toString();
   }
@@ -157,9 +165,9 @@ public class S3ToRedshiftAction extends Action {
     private String s3Region;
 
     @Description("The S3 path of the bucket where the data is stored and will be loaded into the Redshift table. For " +
-      "example, 's3://<bucket-name>/test/' or 's3://<bucket-name>/test/2017-02-22/'(will load files present in " +
-      "specific directory) or 's3://<bucket-name>/test'(will load the files having prefix ``test``) or " +
-      "'s3://<bucket-name>/test/2017-02-22'(will load files from ``test`` directory having prefix ``2017-02-22``). " +
+      "example, 's3://bucket-name/test/' or 's3://bucket-name/test/2017-02-22/'(will load files present in specific " +
+      "directory) or 's3://bucket-name/test'(will load the files having prefix ``test``) or " +
+      "'s3://bucket-name/test/2017-02-22'(will load files from ``test`` directory having prefix ``2017-02-22``). " +
       "(Macro-enabled)")
     @Macro
     private String s3DataPath;

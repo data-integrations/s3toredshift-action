@@ -21,9 +21,9 @@ Role' for connecting to AWS S3 bucket. (Macro-enabled)
 the same region as of the Redshift cluster. (Macro-enabled)
 
 **s3DataPath:** The S3 path of the bucket where the data is stored and will be loaded into the Redshift table.
-For example, 's3://<bucket-name>/test/' or 's3://<bucket-name>/test/2017-02-22/'(will load files present in specific
-directory) or 's3://<bucket-name>/test'(will load the files having prefix ``test``) or
-'s3://<bucket-name>/test/2017-02-22'(will load files from ``test`` directory having prefix ``2017-02-22``).
+For example, 's3://bucket-name/test/' or 's3://bucket-name/test/2017-02-22/'(will load files present in specific
+directory) or 's3://bucket-name/test'(will load the files having prefix ``test``) or
+'s3://bucket-name/test/2017-02-22'(will load files from ``test`` directory having prefix ``2017-02-22``).
 (Macro-enabled)
 
 **clusterDbUrl:** The JDBC Redshift database URL for Redshift cluster, where the table is present. For example,
@@ -66,7 +66,7 @@ into the Redshift table 'redshifttest'.
         "properties": {
           "accessKey": "access-key",
           "secretAccessKey": "secret-access-key",
-          "s3DataPath": "s3://bucket-name>/test/",
+          "s3DataPath": "s3://bucket-name/test/",
           "clusterDbUrl": "jdbc:redshift://x.y.us-west-2.redshift.amazonaws.com:5439/dev",
           "masterUser": "master-user",
           "masterPassword": "master-password",
