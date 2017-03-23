@@ -1,5 +1,3 @@
-<img alt="CDAP Action" src="https://cdap-users.herokuapp.com/assets/cdap-action.svg"/>
-
 ==========================
 S3ToRedshift Action Plugin
 ==========================
