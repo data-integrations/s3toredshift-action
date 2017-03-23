@@ -1,3 +1,5 @@
+[![CDAP Action](cdap-users.herokuapp.com/assets/cdap-action.svg)](http://docs.cask.co/cdap)
+
 ==========================
 S3ToRedshift Action Plugin
 ==========================
