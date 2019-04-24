@@ -18,7 +18,7 @@
   <groupId>co.cask.hydrator</groupId>
   <artifactId>s3toredshift-action-plugin</artifactId>
   <modelVersion>4.0.0</modelVersion>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.1</version>
 
   <licenses>
     <license>
@@ -34,7 +34,7 @@
       <name>Cask Data</name>
       <email>cask-dev@googlegroups.com</email>
       <organization>Cask Data, Inc.</organization>
-      <organizationUrl>http://www.cdap.io</organizationUrl>
+      <organizationUrl>http://cask.co</organizationUrl>
     </developer>
   </developers>
 
