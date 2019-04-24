@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017 Cask Data, Inc.
+ * Copyright © 2019 CDAP
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,10 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package co.cask.hydrator.plugin;
+package io.cdap.plugin;
 
-import co.cask.cdap.etl.mock.common.MockPipelineConfigurer;
-import co.cask.hydrator.plugin.batch.S3ToRedshiftAction;
+import io.cdap.cdap.etl.mock.common.MockPipelineConfigurer;
+import io.cdap.plugin.batch.S3ToRedshiftAction;
 import org.junit.Assert;
 import org.junit.Test;
 
